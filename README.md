@@ -802,6 +802,610 @@ for filename in filenames:
 
 
     <Figure size 1000x300 with 3 Axes>
+
+
+
+##  Making Choices
+
+```python
+import numpy
 ```
+
+
+```python
+data = numpy.loadtxt(fname='inflammation-01.csv', delimiter=',')
+```
+
+
+```python
+max_inflammation_0 = numpy.amax(data, axis=0)[0]
+```
+
+
+```python
+max_inflammation_20 = numpy.amax(data, axis = 0)[20]
+
+if max_inflammation_0 == 0 and max_inflammation_20 == 20:
+    print('Saspicitious looking maxima!')
+```
+
+    Saspicitious looking maxima!
+
+
+
+```python
+max_inflammation_20 = numpy.amax(data, axis = 0)[20]
+
+if max_inflammation_0 == 0 and max_inflammation_20 == 20:
+    print('Saspicitious looking maxima!')
+    
+elif numpy.sum(numpy.amin(data, axis=0)) ==0:
+    print('Minima add up to zero1')
+    
+else:
+    print('Seems OK!')
+```
+
+    Saspicitious looking maxima!
+
+
+
+```python
+data = numpy.loadtxt(fname = 'inflammation-03.csv', delimiter=',')
+
+max_inflammation_0 = numpy.amax(data, axis = 0)[0]
+
+max_inflammation_20 = numpy.amax(data, axis = 0)[20]
+
+if max_inflammation_0 == 0 and max_inflammation_20 == 20:
+    print('Suspicious looking maxima!')
+elif numpy.sum(numpy.amin(data, axis=0)) ==0:
+    print('Minima add up to zero! -> HEALTHY PARTICIPANT ALERT!')
+else:
+    print('Seems ok!')
+```
+
+    Minima add up to zero! -> HEALTHY PARTICIPANT ALERT!
+
+## Making Choices
+
+```python
+num = 37
+if num > 100:
+    print('greater')
+else: 
+    print('not greater')
+print('done')
+```
+
+    not greater
+    done
+
+
+
+```python
+num = 53
+print('before conditional...')
+if num > 100:
+    print(num, 'is greater than 100')
+print('...after conditional')
+```
+
+    before conditional...
+
+
+
+```python
+num = 14
+
+if num > 0: 
+    print(num, 'is positive')
+elif num == 0:
+    print(num, 'is zero')
+else:
+    print(num, 'is negative')
+
+```
+
+    14 is positive
+
+
+
+```python
+if (1 > 0) and (1 >= 0):
+    print('both parts are true')
+else:
+    print('at least one part if false')
+```
+
+    both parts are true
+
+
+
+```python
+if (-1 > 0) or (-1 >= 0):
+    print('at least one part is true')
+else:
+    print('both of these are false')
+```
+
+    both of these are false
+
+
+
+```python
+import numpy
+```
+
+## Functions
+
+```python
+import numpy 
+import matplotlib
+import matplotlib.pyplot
+import glob
+```
+
+
+```python
+'freezing point of water in Kelvin:'
+def visualize(filename):
+    
+    data = numpy.loadtxt(fname = filename, delimiter = ',')
+    
+    fig = matplotlib.pyplot.figure(figsize=(10.0, 3.0))
+    
+    axes1 = fig.add_subplot(1, 3, 1)
+    axes2 = fig.add_subplot(1, 3, 2)
+    axes3 = fig.add_subplot(1, 3, 3)
+    
+    axes1.set_ylabel('average')
+    axes1.plot(numpy.mean(data, axis=0))
+    
+    axes2.set_ylabel('max')
+    axes2.plot(numpy.amax(data, axis = 0))
+    
+    axes3.set_ylabel('min')
+    axes3.plot(numpy.amin(data, axis = 0))
+    
+    fig.tight_layout()
+    matplotlib.pyplot.show()
+```
+
+
+```python
+def detect_problems(filename):
+    
+    data = numpy.loadtxt(fname = filename, delimiter = ',')
+    
+    if numpy.amax(data, axis = 0)[0] == 0 and numpy.amax(data, axis=0)[20] == 20:
+        print("Suspicious looking maxima!")
+    elif numpy.sum(numpy.amin(data, axis=0)) == 0:
+        print('Minima add up to zero!')
+    else:
+        print('Seems ok!')
+```
+
+
+```python
+filenames = sorted(glob.glob('inflammation*.csv'))
+
+for filename in filenames:
+    print(filename)
+    visualize(filename)
+    detect_problems(filename)
+```
+
+
+```python
+def offset_mean(data, target_mean_value):
+    return (data - numpy.mean(data)) + target_mean_value
+```
+
+
+```python
+z = numpy.zeros((2,2))
+print(offset_mean(z, 3))
+
+```
+
+
+```python
+data = numpy.loadtxt(fname = 'inflammation-01.csv', delimiter = ',')
+
+print (offset_mean(data, 0))
+```
+
+
+```python
+print('orignal min, mean and max are:', numpy.amin(data), numpy.mean(data), numpy.amax(data))
+offset_data = offset_mean(data, 0)
+print('min, mean, and max of offset data are:',
+      numpy.amin(offset_data),
+      numpy.mean(offset_data),
+      numpy.amax(offset_data))
+        
+```
+
+
+```python
+print('std dev before and after:', numpy.std(data), numpy.std(offset_data))
+```
+
+
+```python
+print('difference in standard deviation before and after:',
+      numpy.std(data) - numpy.std(offset_data))
+```
+
+
+```python
+# offset_mean(data, target_mean_value):
+# return a new array containing the original data with its mean offset to match the desired value. 
+
+def offset_mean(data, target_mean_value):
+    return (data - numpy.mean(data)) + target_mean_value
+```
+
+
+```python
+def offset_mean(data, target_mean_value):
+    """"Return a new array containing the original data with its mean offset to match the desired value"""
+    return(data - numpy.mean(data)) + target_mean_value
+```
+
+
+```python
+help(offset_mean)
+```
+
+
+```python
+def offset_mean(data, target_mean_value):
+    """"Return a new array containing the original data
+    with its mean offset to match the desired value.
+    
+    Examples
+    ---------
+    
+    >>> Offset_mean([1,2,3], 0)
+    array([-1., 0., 1.])
+    """
+    return (data - numpy.mean(data)) + target_mean_value
+```
+
+
+```python
+help(offset_mean)
+```
+
+
+```python
+numpy.loadtxt('inflammation-01.csv', delimiter = ',')
+```
+
+
+```python
+numpy.loadtxt('inflammation-01.csv', ',')
+```
+
+
+```python
+def offset_mean(data, target_mean_value = 0.0):
+    """"Return a new array containing the original data
+    with its mean offset to match the desired value, (0 by default).
+    
+    Examples
+    ---------
+    
+    >>> offset_mean([1,2,3])
+    array([-1., 0., 1.])
+    """
+    return (data - numpy.mean(data)) + target_mean_value
+```
+
+
+```python
+test_data = numpy.zeros((2,2))
+print(offset_mean(test_data, 3))
+```
+
+
+```python
+print(offset_mean(test_data))
+```
+
+
+```python
+def display(a=1, b=2, c=3):
+    print('a:', a, 'b', b, 'c:', c)
+    
+print('no parameters:')
+display()
+print('one parameter:')
+display(55)
+print('two parameters:')
+display(55,66)
+```
+
+
+```python
+print('only setting the value of c')
+display(c = 77)
+```
+
+
+```python
+help(numpy.loadtxt)
+```
+
+
+```python
+numpy.loadtxt('inflammation-01.csv', delimiter = ',')
+```
+
+
+```python
+def s(p):
+    a = 0
+    for v in p:
+        a += v
+    m = a / len(p)
+    d = 0
+    for v in p:
+        d += (v - m) * (v - m)
+    return numpy.sqrt(d / (len(p) -1))
+
+def std_dev(sample):
+    sample_sum = 0
+    for value in sample:
+        sample_sum += value
+        
+    sample_mean = sample_sum / len(sample)
+    
+    sum_squared_devs = 0
+    for value in sample: 
+        sum_squared_devs += (value - sample_mean) * (value - sample_mean)
+        
+    return numpy.sqrt(sum_squared_devs / (len(sample) - 1))
+
+```
+## Errors
+
+```python
+# This code has an intentional error. You can type it directly
+# or use it for reference to understand the error message below. 
+
+def favorite_ice_cream():
+    ice_creams = [
+        'chacolate',
+        'vanilla',
+        'strawberry'
+    ]
+    print(ice_creams[3])
+    
+favorite_ice_cream()
+```
+
+
+    ---------------------------------------------------------------------------
+
+    IndexError                                Traceback (most recent call last)
+
+    <ipython-input-1-96884ae5987c> in <module>
+         10     print(ice_creams[3])
+         11 
+    ---> 12 favorite_ice_cream()
+    
+
+    <ipython-input-1-96884ae5987c> in favorite_ice_cream()
+          8         'strawberry'
+          9     ]
+    ---> 10     print(ice_creams[3])
+         11 
+         12 favorite_ice_cream()
+
+
+    IndexError: list index out of range
+
+
+
+```python
+def some_function():
+    msg = 'hello, world!'
+    print(msg)
+    return msg
+```
+
+
+```python
+print(a)
+```
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-3-bca0e2660b9f> in <module>
+    ----> 1 print(a)
+    
+
+    NameError: name 'a' is not defined
+
+
+
+```python
+print('hello')
+```
+
+    hello
+
+
+
+```python
+count = 0
+
+for number in range(10):
+    count = count + number 
+print('The count is:', count)
+```
+
+    The count is: 45
+
+
+
+```python
+letters = ['a', 'b', 'c']
+
+print('Letter #1 is', letters[0])
+print('Letter #2 is', letters[1])
+print('Letter #3 is', letters[2])
+#print('Letter #4 is', letters[3])
+```
+
+    Letter #1 is a
+    Letter #2 is b
+    Letter #3 is c
+
+
+
+```python
+file_handle = open('myfile.txt', 'w')
+
+```
+## Defensive Programming 
+
+```python
+numbers = [1.5, 2.3, 0.7, -0.001, 4.4]
+total = 0.0
+for num in numbers: 
+    assert num > 0.0, 'Data should only contain positive values'
+    total += num 
+print('total is:', total)
+```
+
+
+    ---------------------------------------------------------------------------
+
+    AssertionError                            Traceback (most recent call last)
+
+    <ipython-input-1-9f81f9e6a6b6> in <module>
+          2 total = 0.0
+          3 for num in numbers:
+    ----> 4     assert num > 0.0, 'Data should only contain positive values'
+          5     total += num
+          6 print('total is:', total)
+
+
+    AssertionError: Data should only contain positive values
+
+
+
+```python
+def normalize_rectangle(rect):
+    """Normalizes a rectangle so that it is at the origin and 1.0 units long on its longest axis.
+    input should be of the format (x0, y0, x1, y1).
+    (x0, y0) and (x1, y1) define the lower left and upper right corners of the rectangle respectively."""
+    assert len(rect) ==4, 'Rectangles must contain 4 coordinates'
+    x0, y0, x1, y1 = rect
+    assert x0 < x1, 'Invalid X coordinates'
+    assert y0 < y1, 'Invalid Y coordinates'
+    
+    dx = x1 - x0
+    dy = y1 - y0
+    if dx > dy: 
+        scaled = dy / dx
+        upper_x, upper_y = 1.0, scaled
+    else:
+        scaled = dx / dy
+        upper_x, upper_y = scaled, 1.0
+        
+    assert 0 < upper_x <= 1.0, 'Calculated upper x coordiante invalid'
+    assert 0 < upper_y <= 1.0, 'Calculated upper y coordiante invalid'
+    
+    return (0, 0, upper_x, upper_y)
+```
+
+
+```python
+print(normalize_rectangle ( (0.0, 1.0, 2.0)))
+```
+
+
+    ---------------------------------------------------------------------------
+
+    AssertionError                            Traceback (most recent call last)
+
+    <ipython-input-3-266c6a90b65b> in <module>
+    ----> 1 print(normalize_rectangle ( (0.0, 1.0, 2.0)))
+    
+
+    <ipython-input-2-341ba6237d71> in normalize_rectangle(rect)
+          3     input should be of the format (x0, y0, x1, y1).
+          4     (x0, y0) and (x1, y1) define the lower left and upper right corners of the rectangle respectively."""
+    ----> 5     assert len(rect) ==4, 'Rectangles must contain 4 coordinates'
+          6     x0, y0, x1, y1 = rect
+          7     assert x0 < x1, 'Invalid X coordinates'
+
+
+    AssertionError: Rectangles must contain 4 coordinates
+
+
+
+```python
+print(normalize_rectangle( (4.0, 2.0, 1.0, 5.0) ))
+```
+
+
+    ---------------------------------------------------------------------------
+
+    AssertionError                            Traceback (most recent call last)
+
+    <ipython-input-4-f7e0d48bdfd0> in <module>
+    ----> 1 print(normalize_rectangle( (4.0, 2.0, 1.0, 5.0) ))
+    
+
+    <ipython-input-2-341ba6237d71> in normalize_rectangle(rect)
+          5     assert len(rect) ==4, 'Rectangles must contain 4 coordinates'
+          6     x0, y0, x1, y1 = rect
+    ----> 7     assert x0 < x1, 'Invalid X coordinates'
+          8     assert y0 < y1, 'Invalid Y coordinates'
+          9 
+
+
+    AssertionError: Invalid X coordinates
+
+
+
+```python
+print(normalize_rectangle( (0.0, 0.0, 1.0, 5.0)))
+```
+
+    (0, 0, 0.2, 1.0)
+
+
+
+```python
+print(normalize_rectangle( (0.0, 0.0, 5.0, 1.0)))
+```
+
+    (0, 0, 1.0, 0.2)
+
+
+## Commmand Line Programs
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
