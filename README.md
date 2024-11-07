@@ -1,5 +1,5 @@
 # Georgia_Albritton_Python_Portfolio
-This is the portfolio for python code that I learned during BISC 450C
+This is Georgia Albritton's portfolio for python code that I learned during BISC 450C. This was my first time to ever code, so everything was very interesting and new to me! I am excited to learn more.
 
 
 ## Analyzing Patient Data 
