@@ -362,6 +362,19 @@ fig.set_size_inches(14, 4)
 fig.tight_layout()
 ```
 
+
+```python
+
+```
+
+
+```python
+
+```
+
+![image](https://github.com/user-attachments/assets/e96e3c1f-eede-4a1a-8f01-4e90e3355af4)
+
+
 ## Python Fundamentals
 
 ```python
